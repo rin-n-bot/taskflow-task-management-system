@@ -47,17 +47,20 @@ $statuses = taskStatuses();
 $priorities = taskPriorities();
 $errors = [];
 
+// Add a comment: admin or the assigned member may comment on this task.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_status = sanitize($_POST['status'] ?? '');
+    $body = sanitize($_POST['body'] ?? '');
 
-    if (!isset($statuses[$new_status])) {
-        $errors['status'] = 'Choose a valid status.';
+    if ($body === '') {
+        $errors['body'] = 'Comment is required.';
     } else {
         try {
-            $stmt = $pdo->prepare('UPDATE tasks SET status = ? WHERE id = ?');
-            $stmt->execute([$new_status, $id]);
+            $stmt = $pdo->prepare(
+                'INSERT INTO comments (task_id, user_id, body) VALUES (?, ?, ?)'
+            );
+            $stmt->execute([$id, $user_id, $body]);
 
-            header('Location: ' . BASE_URL . '/pages/tasks/view.php?id=' . $id . '&msg=updated');
+            header('Location: ' . BASE_URL . '/pages/tasks/view.php?id=' . $id . '&msg=comment_added');
             exit;
         } catch (PDOException $e) {
             logError($e->getMessage());
@@ -66,9 +69,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$notice = isset($_GET['msg']) && $_GET['msg'] === 'updated'
-    ? 'Task status updated.'
-    : '';
+try {
+    $stmt = $pdo->prepare(
+        'SELECT c.id, c.body, c.created_at, u.name AS commenter_name
+         FROM comments c
+         JOIN users u ON c.user_id = u.id
+         WHERE c.task_id = ?
+         ORDER BY c.created_at DESC'
+    );
+    $stmt->execute([$id]);
+    $comments = $stmt->fetchAll();
+} catch (PDOException $e) {
+    logError($e->getMessage());
+    $db_error = 'Something went wrong. Please try again.';
+    $comments = [];
+}
+
+$notices = [
+    'updated'        => 'Task status updated.',
+    'comment_added'  => 'Comment added.',
+    'comment_deleted' => 'Comment deleted.',
+];
+
+$problems = [
+    'notfound'      => 'Task not found.',
+    'forbidden'     => 'You do not have access to that task.',
+    'comment_forbidden' => 'You can only delete your own comments.',
+    'db'            => 'Something went wrong. Please try again.',
+];
+
+$code = $_GET['msg'] ?? '';
+$notice = $notices[$code] ?? '';
+$problem = $problems[$code] ?? '';
 
 $page_title = 'Task details';
 require_once BASE_PATH . '/includes/header.php';
@@ -78,6 +110,14 @@ require_once BASE_PATH . '/includes/header.php';
 
 <?php if ($notice !== ''): ?>
     <div class="alert-success"><?php echo e($notice); ?></div>
+<?php endif; ?>
+
+<?php if ($problem !== ''): ?>
+    <div class="alert-error"><?php echo e($problem); ?></div>
+<?php endif; ?>
+
+<?php if (isset($db_error)): ?>
+    <div class="alert-error"><?php echo e($db_error); ?></div>
 <?php endif; ?>
 
 <?php if (isset($errors['general'])): ?>
@@ -115,6 +155,53 @@ require_once BASE_PATH . '/includes/header.php';
         </tr>
     </tbody>
 </table>
+
+<h2>Comments</h2>
+
+<?php if (empty($comments)): ?>
+    <p class="empty">No comments yet.</p>
+<?php else: ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commenter</th>
+                <th>Comment</th>
+                <th>Posted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($comments as $comment): ?>
+                <tr>
+                    <td><?php echo e($comment['commenter_name']); ?></td>
+                    <td><?php echo nl2br(e($comment['body'])); ?></td>
+                    <td><?php echo e(date('M j, Y \a\t H:i', strtotime($comment['created_at']))); ?></td>
+                    <td>
+                        <?php if ($is_admin || (int) $comment['user_id'] === $user_id): ?>
+                            <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/comment_delete.php" onsubmit="return confirm('Delete this comment?');">
+                                <input type="hidden" name="id" value="<?php echo (int) $comment['id']; ?>">
+                                <input type="hidden" name="task_id" value="<?php echo (int) $task['id']; ?>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">
+    <div class="field<?php echo isset($errors['body']) ? ' has-error' : ''; ?>">
+        <label for="body">Add a comment</label>
+        <textarea id="body" name="body" rows="3"><?php echo isset($_POST['body']) ? e(sanitize($_POST['body'])) : ''; ?></textarea>
+        <?php if (isset($errors['body'])): ?>
+            <span class="error"><?php echo e($errors['body']); ?></span>
+        <?php endif; ?>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add comment</button>
+</form>
 
 <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>" class="row">
     <div class="field<?php echo isset($errors['status']) ? ' has-error' : ''; ?>">
