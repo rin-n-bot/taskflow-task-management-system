@@ -159,6 +159,13 @@ main > form:not(.row) {
     box-shadow: 0 1px 3px rgb(31 36 48 / 6%);
 }
 
+main > img[alt="Current profile avatar"] {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 a:focus-visible,
 button:focus-visible {
     outline: 3px solid var(--primary);
