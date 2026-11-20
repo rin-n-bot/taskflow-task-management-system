@@ -96,3 +96,52 @@ function taskPriorities()
         'high' => 'High',
     ];
 }
+
+// Validate task input and return field => message errors.
+function validateTask($data)
+{
+    $errors = [];
+    $project_id = (int) ($data['project_id'] ?? 0);
+    $assigned_to = (int) ($data['assigned_to'] ?? 0);
+    $title = sanitize($data['title'] ?? '');
+    $priority = sanitize($data['priority'] ?? '');
+    $status = sanitize($data['status'] ?? '');
+    $due_date = sanitize($data['due_date'] ?? '');
+    $priorities = taskPriorities();
+    $statuses = taskStatuses();
+
+    if ($project_id <= 0) {
+        $errors['project_id'] = 'Choose a project.';
+    }
+
+    if ($assigned_to <= 0) {
+        $errors['assigned_to'] = 'Choose a member.';
+    }
+
+    if ($title === '') {
+        $errors['title'] = 'Title is required.';
+    } elseif (mb_strlen($title) > 150) {
+        $errors['title'] = 'Title must be 150 characters or fewer.';
+    }
+
+    if (!isset($priorities[$priority])) {
+        $errors['priority'] = 'Choose a valid priority.';
+    }
+
+    if (!isset($statuses[$status])) {
+        $errors['status'] = 'Choose a valid status.';
+    }
+
+    if ($due_date === '') {
+        $errors['due_date'] = 'Due date is required.';
+    } else {
+        $date = DateTime::createFromFormat('Y-m-d', $due_date);
+
+        // Re-formatting rejects impossible dates such as 2026-02-30.
+        if (!$date || $date->format('Y-m-d') !== $due_date) {
+            $errors['due_date'] = 'Enter a valid date (YYYY-MM-DD).';
+        }
+    }
+
+    return $errors;
+}

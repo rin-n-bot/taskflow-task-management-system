@@ -99,8 +99,15 @@ $problems = [
     'db' => 'Something went wrong. Please try again.',
 ];
 
+$notices = [
+    'created' => 'Task created.',
+    'updated' => 'Task updated.',
+    'deleted' => 'Task deleted.',
+];
+
 $code = $_GET['msg'] ?? '';
 $problem = $problems[$code] ?? '';
+$notice = $notices[$code] ?? '';
 
 $has_filters = $status !== '' || $priority !== ''
     || $project_id > 0 || $assignee_id > 0 || $keyword !== '';
@@ -111,12 +118,22 @@ require_once BASE_PATH . '/includes/header.php';
 
 <h1>Tasks</h1>
 
+<?php if ($notice !== ''): ?>
+    <div class="alert-success"><?php echo e($notice); ?></div>
+<?php endif; ?>
+
 <?php if ($problem !== ''): ?>
     <div class="alert-error"><?php echo e($problem); ?></div>
 <?php endif; ?>
 
 <?php if ($db_error !== ''): ?>
     <div class="alert-error"><?php echo e($db_error); ?></div>
+<?php endif; ?>
+
+<?php if ($is_admin): ?>
+    <div class="row">
+        <a class="btn btn-primary" href="<?php echo BASE_URL; ?>/pages/tasks/create.php">New task</a>
+    </div>
 <?php endif; ?>
 
 <form method="get" action="<?php echo BASE_URL; ?>/pages/tasks/index.php" class="row">
@@ -214,7 +231,18 @@ require_once BASE_PATH . '/includes/header.php';
                     </td>
                     <td><?php echo e(date('M j, Y', strtotime($task['due_date']))); ?></td>
                     <td>
-                        <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
+                        <?php if ($is_admin): ?>
+                            <div class="row">
+                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
+                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/edit.php?id=<?php echo (int) $task['id']; ?>">Edit</a>
+                                <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/delete.php" onsubmit="return confirm('Delete this task? Its comments will also be deleted.');">
+                                    <input type="hidden" name="id" value="<?php echo (int) $task['id']; ?>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        <?php else: ?>
+                            <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
