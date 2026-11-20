@@ -5,11 +5,35 @@ require_once BASE_PATH . '/includes/auth.php';
 
 requireRole('admin');
 
-$page_title = 'Delete project';
-require_once BASE_PATH . '/includes/header.php';
-?>
+// Deletes only happen through the confirmation form (POST).
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ' . BASE_URL . '/pages/projects/index.php');
+    exit;
+}
 
-<h1>Delete project</h1>
-<p class="empty">This page will be built in Phase 5.</p>
+$id = (int) ($_POST['id'] ?? 0);
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+if ($id <= 0) {
+    header('Location: ' . BASE_URL . '/pages/projects/index.php?msg=notfound');
+    exit;
+}
+
+try {
+    $stmt = $pdo->prepare('SELECT id FROM projects WHERE id = ?');
+    $stmt->execute([$id]);
+
+    if (!$stmt->fetch()) {
+        header('Location: ' . BASE_URL . '/pages/projects/index.php?msg=notfound');
+        exit;
+    }
+
+    $stmt = $pdo->prepare('DELETE FROM projects WHERE id = ?');
+    $stmt->execute([$id]);
+
+    header('Location: ' . BASE_URL . '/pages/projects/index.php?msg=deleted');
+    exit;
+} catch (PDOException $e) {
+    logError($e->getMessage());
+    header('Location: ' . BASE_URL . '/pages/projects/index.php?msg=db');
+    exit;
+}

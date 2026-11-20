@@ -56,3 +56,23 @@ function validateUser($data)
 
     return $errors;
 }
+
+// Validate project input and return field => message errors.
+function validateProject($data)
+{
+    $errors = [];
+    $title = sanitize($data['title'] ?? '');
+    $description = sanitize($data['description'] ?? '');
+
+    if ($title === '') {
+        $errors['title'] = 'Title is required.';
+    } elseif (mb_strlen($title) > 150) {
+        $errors['title'] = 'Title must be 150 characters or fewer.';
+    }
+
+    if (mb_strlen($description) > 1000) {
+        $errors['description'] = 'Description must be 1000 characters or fewer.';
+    }
+
+    return $errors;
+}
