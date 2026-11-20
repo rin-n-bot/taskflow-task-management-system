@@ -49,22 +49,42 @@ $errors = [];
 
 // Add a comment: admin or the assigned member may comment on this task.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $body = sanitize($_POST['body'] ?? '');
+    if (isset($_POST['status'])) {
+        $new_status = sanitize($_POST['status'] ?? '');
 
-    if ($body === '') {
-        $errors['body'] = 'Comment is required.';
+        if (!isset($statuses[$new_status])) {
+            $errors['status'] = 'Choose a valid status.';
+        } else {
+            try {
+                $stmt = $pdo->prepare('UPDATE tasks SET status = ? WHERE id = ?');
+                $stmt->execute([$new_status, $id]);
+
+                header('Location: ' . BASE_URL . '/pages/tasks/view.php?id=' . $id . '&msg=updated');
+                exit;
+            } catch (PDOException $e) {
+                logError($e->getMessage());
+                $errors['general'] = 'Something went wrong. Please try again.';
+            }
+        }
     } else {
-        try {
-            $stmt = $pdo->prepare(
-                'INSERT INTO comments (task_id, user_id, body) VALUES (?, ?, ?)'
-            );
-            $stmt->execute([$id, $user_id, $body]);
+        // Add a comment: admin or the assigned member may comment on this task.
+        $body = sanitize($_POST['body'] ?? '');
 
-            header('Location: ' . BASE_URL . '/pages/tasks/view.php?id=' . $id . '&msg=comment_added');
-            exit;
-        } catch (PDOException $e) {
-            logError($e->getMessage());
-            $errors['general'] = 'Something went wrong. Please try again.';
+        if ($body === '') {
+            $errors['body'] = 'Comment is required.';
+        } else {
+            try {
+                $stmt = $pdo->prepare(
+                    'INSERT INTO comments (task_id, user_id, body) VALUES (?, ?, ?)'
+                );
+                $stmt->execute([$id, $user_id, $body]);
+
+                header('Location: ' . BASE_URL . '/pages/tasks/view.php?id=' . $id . '&msg=comment_added');
+                exit;
+            } catch (PDOException $e) {
+                logError($e->getMessage());
+                $errors['general'] = 'Something went wrong. Please try again.';
+            }
         }
     }
 }
