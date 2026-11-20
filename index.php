@@ -20,4 +20,4 @@ require_once BASE_PATH . '/includes/header.php';
     <a class="btn" href="<?php echo BASE_URL; ?>/pages/register.php">Create an account</a>
 </div>
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+<?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

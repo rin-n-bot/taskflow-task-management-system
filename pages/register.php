@@ -98,4 +98,4 @@ require_once BASE_PATH . '/includes/header.php';
 
 <p>Already registered? <a href="<?php echo BASE_URL; ?>/pages/login.php">Log in</a></p>
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+<?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

@@ -82,6 +82,8 @@ work on assigned tasks. Two roles, four related tables.
   `is-overdue`.
 - Shared navigation and the theme toggle use the left sidebar; it moves above
   the main content on small screens.
+- Pages do not display a shared footer. `includes/layout_end.php` closes the
+  shared page layout.
 - No inline styles. No new classes per page. If a pattern is missing, ask.
 - Theme: `body.theme-light` / `body.theme-dark` + CSS variables. Cookie
   accepts `light` or `dark` only.

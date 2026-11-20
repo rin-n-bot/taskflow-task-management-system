@@ -202,4 +202,4 @@ require_once BASE_PATH . '/includes/header.php';
     <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/index.php">Cancel</a>
 </form>
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+<?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

@@ -12,4 +12,4 @@ require_once BASE_PATH . '/includes/header.php';
 <h1>Profile</h1>
 <p class="empty">This page will be built in Phase 10.</p>
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+<?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

@@ -178,4 +178,4 @@ require_once BASE_PATH . '/includes/header.php';
     </table>
 <?php endif; ?>
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+<?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

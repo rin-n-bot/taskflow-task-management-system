@@ -64,7 +64,7 @@ Admin seed uses a real `password_hash()` value. Plain password goes in README on
 taskflow/
 ├── index.php
 ├── config/database.php          (PDO connection, central)
-├── includes/{header.php, footer.php, functions.php, auth.php}
+├── includes/{header.php, layout_end.php, functions.php, auth.php}
 ├── pages/
 │   ├── login.php, register.php, logout.php, dashboard.php, profile.php, theme.php
 │   ├── projects/{index,create,edit,delete}.php
@@ -89,6 +89,8 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - Invalid or missing ID (e.g. in `edit.php`, `view.php`) → friendly message + redirect.
 - Navigation and the theme toggle use the shared left sidebar. On small screens,
   the sidebar moves above the main content.
+- Pages do not display a footer. The shared layout closes through
+  `includes/layout_end.php`.
 
 ### 4.1 Auth
 - Register: name, email, password, confirm. Unique email check, `password_hash()`.
@@ -149,7 +151,7 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 | # | Phase | Build | Professor's week |
 |---|---|---|---|
 | 1 | Proposal | Title, problem, users/roles, features, table list | 2 |
-| 2 | Scaffold | Folders, `config/database.php` (PDO), `includes/functions.php` and `includes/auth.php` (function names per `AGENTS.md`), header/footer, `style.css`, `theme.php`, `index.php`, placeholders, `.htaccess`, empty log | 3 |
+| 2 | Scaffold | Folders, `config/database.php` (PDO), `includes/functions.php` and `includes/auth.php` (function names per `AGENTS.md`), shared header/layout includes, `style.css`, `theme.php`, `index.php`, placeholders, `.htaccess`, empty log | 3 |
 | 3 | Database | `taskflow.sql` with schema + seed (real `password_hash`) | 6–9 |
 | 4 | Auth | register, login, logout, remember-username cookie | 10 (guide: 15) |
 | 5 | Projects | full CRUD + search + confirm delete | 10–11 |
