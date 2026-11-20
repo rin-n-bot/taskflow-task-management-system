@@ -32,7 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$new_role, $target_id]);
 
                 if ($stmt->rowCount() === 0) {
-                    header('Location: ' . BASE_URL . '/pages/admin/users.php?msg=notfound');
+                    // MySQL reports zero changed rows when the user already has this role.
+                    $check_stmt = $pdo->prepare('SELECT id FROM users WHERE id = ?');
+                    $check_stmt->execute([$target_id]);
+
+                    if ($check_stmt->fetch() === false) {
+                        header('Location: ' . BASE_URL . '/pages/admin/users.php?msg=notfound');
+                    } else {
+                        header('Location: ' . BASE_URL . '/pages/admin/users.php?msg=role_unchanged');
+                    }
                     exit;
                 }
 
@@ -90,6 +98,7 @@ $roles = ['admin' => 'Admin', 'member' => 'Member'];
 
 $notices = [
     'role_changed' => 'Role updated.',
+    'role_unchanged' => 'This user already has that role.',
     'user_deleted' => 'User deleted.',
 ];
 
