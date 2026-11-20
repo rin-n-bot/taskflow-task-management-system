@@ -1,12 +1,30 @@
 <?php
 
 require_once dirname(__DIR__) . '/config/database.php';
+require_once BASE_PATH . '/includes/auth.php';
 
-$page_title = 'Log out';
-require_once BASE_PATH . '/includes/header.php';
-?>
+if (!isLoggedIn()) {
+    header('Location: ' . BASE_URL . '/pages/login.php');
+    exit;
+}
 
-<h1>Log out</h1>
-<p class="empty">This page will be built in Phase 4.</p>
+$_SESSION = [];
 
-<?php require_once BASE_PATH . '/includes/footer.php'; ?>
+// Expire the session cookie so the browser drops it too.
+if (ini_get('session.use_cookies')) {
+    $params = session_get_cookie_params();
+
+    setcookie(session_name(), '', [
+        'expires' => time() - 42000,
+        'path' => $params['path'],
+        'domain' => $params['domain'],
+        'secure' => $params['secure'],
+        'httponly' => $params['httponly'],
+        'samesite' => $params['samesite'] ?? 'Lax',
+    ]);
+}
+
+session_destroy();
+
+header('Location: ' . BASE_URL . '/pages/login.php');
+exit;
