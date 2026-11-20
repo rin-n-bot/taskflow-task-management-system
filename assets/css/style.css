@@ -1,0 +1,310 @@
+/* Task Flow: shared styles. Only classes listed in AGENTS.md are used. */
+
+body.theme-light {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface-alt: #eef0f6;
+    --text: #1f2430;
+    --muted: #6b7280;
+    --border: #d7dbe4;
+    --primary: #4f46e5;
+    --primary-text: #ffffff;
+    --danger: #b91c1c;
+    --danger-soft: #fdecec;
+    --success: #15803d;
+    --success-soft: #e8f6ee;
+    --info-soft: #e8f0fe;
+}
+
+body.theme-dark {
+    --bg: #12141a;
+    --surface: #1b1e26;
+    --surface-alt: #232733;
+    --text: #e7e9ee;
+    --muted: #9aa1b1;
+    --border: #333845;
+    --primary: #7c83ff;
+    --primary-text: #0f1117;
+    --danger: #f87171;
+    --danger-soft: #3a1d1d;
+    --success: #4ade80;
+    --success-soft: #16301f;
+    --info-soft: #1c2740;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    line-height: 1.55;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.25;
+    margin: 0 0 0.5rem;
+}
+
+p {
+    margin: 0 0 0.75rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+.nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav > .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.nav nav a {
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    color: var(--muted);
+}
+
+.nav nav a:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--surface-alt);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-text);
+}
+
+.btn-primary:hover {
+    background: var(--primary);
+    opacity: 0.9;
+}
+
+.btn-danger {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background: var(--danger);
+    opacity: 0.9;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.9rem;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+.field.has-error input,
+.field.has-error select,
+.field.has-error textarea {
+    border-color: var(--danger);
+}
+
+.field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.error {
+    color: var(--danger);
+    font-size: 0.85rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.table th {
+    background: var(--surface-alt);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+}
+
+.table tr:last-child td {
+    border-bottom: 0;
+}
+
+.badge-low,
+.badge-medium,
+.badge-high,
+.badge-todo,
+.badge-in-progress,
+.badge-done {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.badge-low,
+.badge-done {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.badge-medium,
+.badge-in-progress {
+    background: var(--info-soft);
+    color: var(--primary);
+}
+
+.badge-high {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.badge-todo {
+    background: var(--surface-alt);
+    color: var(--muted);
+}
+
+.alert-success,
+.alert-error,
+.alert-info {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary);
+    background: var(--info-soft);
+}
+
+.alert-success {
+    border-left-color: var(--success);
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.alert-error {
+    border-left-color: var(--danger);
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.empty {
+    padding: 1rem;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.is-overdue {
+    color: var(--danger);
+    font-weight: 600;
+}
+
+footer {
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+}
+
+footer p {
+    margin: 0;
+}
