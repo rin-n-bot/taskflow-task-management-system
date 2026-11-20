@@ -81,7 +81,9 @@ work on assigned tasks. Two roles, four related tables.
   `field.has-error`, `error`, `table`, `badge-*`, `alert-*`, `empty`,
   `is-overdue`.
 - Shared navigation and the theme toggle use the left sidebar; it moves above
-  the main content on small screens.
+  the main content on small screens. Login and registration screens use a split
+  layout without the sidebar and keep the theme toggle and link to the other auth
+  action beside the form.
 - Pages do not display a shared footer. `includes/layout_end.php` closes the
   shared page layout.
 - No inline styles. No new classes per page. If a pattern is missing, ask.
@@ -116,3 +118,4 @@ work on assigned tasks. Two roles, four related tables.
 2. Out of scope? Don't build. Ask.
 3. Scope wins over this file on conflicts.
 4. Fix root causes, not symptoms.
+5. Don't assume what exists.

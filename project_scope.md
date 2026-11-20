@@ -29,7 +29,7 @@ New registrations always get role `member`. The admin account is seeded in SQL.
 
 ## 2. Database
 
-Database: `taskflow`. Export to `database/taskflow.sql` with sample data (1 admin, 3+ members, 3+ projects, 10+ tasks, a few comments).
+Database: `taskflow`. `database/taskflow.sql` creates the tables and seeds only the admin account. Do not include pre-made member, project, task, or comment records. Create demo records through the website, then include those manually entered records in the final database export for the professor.
 
 **users**: id (PK), name VARCHAR(100), email VARCHAR(150) UNIQUE, password_hash VARCHAR(255), role ENUM('admin','member') default 'member', avatar VARCHAR(255) NULL, created_at TIMESTAMP.
 
@@ -53,7 +53,7 @@ JOIN projects p ON t.project_id = p.id
 JOIN users u ON t.assigned_to = u.id
 ```
 
-Admin seed uses a real `password_hash()` value. Plain password goes in README only.
+The single admin seed uses a real `password_hash()` value. Plain password goes in README only. Importing this SQL file drops and recreates the tables, so only import it when setting up a clean database; re-importing deletes existing website data.
 
 ---
 
@@ -76,7 +76,7 @@ taskflow/
 └── README.md
 ```
 
-README contents: project name, team members, XAMPP setup + SQL import steps, default admin login, feature list.
+README contents: project name, team members, XAMPP setup + SQL import steps, default admin login, feature list, and instructions to create demo records through the website. Warn that importing the SQL file resets the database.
 
 ---
 
@@ -86,8 +86,11 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - All forms: validate on the server, show errors above the form, keep submitted values after an error.
 - All DB operations in `try/catch`: log technical errors to `logs/error.log`, show only friendly messages.
 - Invalid or missing ID (e.g. in `edit.php`, `view.php`) → friendly message + redirect.
-- Navigation and the theme toggle use the shared left sidebar. On small screens,
-  the sidebar moves above the main content.
+- Login and registration pages use a split two-panel layout without the shared
+  sidebar. Keep the theme toggle and link to the other account action beside
+  the form.
+- Other pages use the shared left sidebar for navigation and the theme toggle.
+  On small screens, the sidebar moves above the main content.
 - Pages do not display a footer. The shared layout closes through
   `includes/layout_end.php`.
 
@@ -148,7 +151,7 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 |---|---|---|---|
 | 1 | Proposal | Title, problem, users/roles, features, table list | 2 |
 | 2 | Scaffold | Folders, `config/database.php` (PDO), `includes/functions.php` and `includes/auth.php` (function names per `AGENTS.md`), shared header/layout includes, `style.css`, `theme.php`, `index.php`, placeholders, `.htaccess`, empty log | 3 |
-| 3 | Database | `taskflow.sql` with schema + seed (real `password_hash`) | 6–9 |
+| 3 | Database | `taskflow.sql` with schema + only the admin seed (real `password_hash`); create demo records through the website | 6–9 |
 | 4 | Auth | register, login, logout, remember-username cookie | 10 (guide: 15) |
 | 5 | Projects | full CRUD + search + confirm delete | 10–11 |
 | 6 | Tasks list + view | JOIN, filters, ownership check, status update | 11 |
@@ -157,7 +160,7 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 | 9 | Users | list, change role, delete + SQLSTATE 23000 catch | 15–16 |
 | 10 | Profile | name + avatar upload | 17 |
 | 11 | Dashboard | role-aware counts, overdue, theme cookie | 14 |
-| 12 | Audit + docs | walk every file against `AGENTS.md`; README + 20-row test log; manuscript | 13, 17 |
+| 12 | Audit + docs | walk every file against `AGENTS.md`; README + 20-row test log; export manually entered demo records; manuscript | 13, 17 |
 | 13 | Presentation | Demo: DB → register/login → CRUD → filters → roles → validation → errors → code walkthrough | 18 |
 
 Functions are added when first needed: `sanitize`, `e`, `logError` at scaffold; `validateUser` in Phase 4; `validateTask` in Phase 7. Full list and signatures live in `AGENTS.md`.

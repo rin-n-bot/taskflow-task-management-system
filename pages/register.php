@@ -54,48 +54,67 @@ $page_title = 'Register';
 require_once BASE_PATH . '/includes/header.php';
 ?>
 
-<h1>Register</h1>
-
-<?php if (isset($errors['general'])): ?>
-    <div class="alert-error"><?php echo e($errors['general']); ?></div>
-<?php endif; ?>
-
-<form method="post" action="<?php echo BASE_URL; ?>/pages/register.php">
-    <div class="field<?php echo isset($errors['name']) ? ' has-error' : ''; ?>">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<?php echo e($name); ?>">
-        <?php if (isset($errors['name'])): ?>
-            <span class="error"><?php echo e($errors['name']); ?></span>
-        <?php endif; ?>
+<section aria-labelledby="register-promo-heading">
+    <a href="<?php echo BASE_URL; ?>/index.php"><strong>Task Flow</strong></a>
+    <div>
+        <h1 id="register-promo-heading">Bring your team's work into focus.</h1>
+        <p>Projects, tasks, and progress stay together, so everyone can see what needs attention.</p>
     </div>
+    <p>Plan the work. Share progress. Finish together.</p>
+</section>
 
-    <div class="field<?php echo isset($errors['email']) ? ' has-error' : ''; ?>">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<?php echo e($email); ?>">
-        <?php if (isset($errors['email'])): ?>
-            <span class="error"><?php echo e($errors['email']); ?></span>
+<section aria-labelledby="register-heading">
+    <div>
+        <h2 id="register-heading">Create your account</h2>
+        <p>Get your team organized in Task Flow.</p>
+
+        <?php if (isset($errors['general'])): ?>
+            <div class="alert-error"><?php echo e($errors['general']); ?></div>
         <?php endif; ?>
+
+        <form id="auth-form" method="post" action="<?php echo BASE_URL; ?>/pages/register.php">
+            <div class="field<?php echo isset($errors['name']) ? ' has-error' : ''; ?>">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" autocomplete="name" value="<?php echo e($name); ?>">
+                <?php if (isset($errors['name'])): ?>
+                    <span class="error"><?php echo e($errors['name']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="field<?php echo isset($errors['email']) ? ' has-error' : ''; ?>">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" autocomplete="email" value="<?php echo e($email); ?>">
+                <?php if (isset($errors['email'])): ?>
+                    <span class="error"><?php echo e($errors['email']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="field<?php echo isset($errors['password']) ? ' has-error' : ''; ?>">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="new-password">
+                <?php if (isset($errors['password'])): ?>
+                    <span class="error"><?php echo e($errors['password']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="field<?php echo isset($errors['confirm']) ? ' has-error' : ''; ?>">
+                <label for="confirm">Confirm password</label>
+                <input type="password" id="confirm" name="confirm" autocomplete="new-password">
+                <?php if (isset($errors['confirm'])): ?>
+                    <span class="error"><?php echo e($errors['confirm']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create account</button>
+        </form>
+
+        <p>Already have an account? <a href="<?php echo BASE_URL; ?>/pages/login.php">Login</a></p>
+        <p>
+            <a href="<?php echo BASE_URL; ?>/pages/theme.php?theme=<?php echo e($next_theme); ?>">
+                Use <?php echo $theme === 'dark' ? 'light' : 'dark'; ?> mode
+            </a>
+        </p>
     </div>
-
-    <div class="field<?php echo isset($errors['password']) ? ' has-error' : ''; ?>">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-        <?php if (isset($errors['password'])): ?>
-            <span class="error"><?php echo e($errors['password']); ?></span>
-        <?php endif; ?>
-    </div>
-
-    <div class="field<?php echo isset($errors['confirm']) ? ' has-error' : ''; ?>">
-        <label for="confirm">Confirm password</label>
-        <input type="password" id="confirm" name="confirm">
-        <?php if (isset($errors['confirm'])): ?>
-            <span class="error"><?php echo e($errors['confirm']); ?></span>
-        <?php endif; ?>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create account</button>
-</form>
-
-<p>Already registered? <a href="<?php echo BASE_URL; ?>/pages/login.php">Log in</a></p>
+</section>
 
 <?php require_once BASE_PATH . '/includes/layout_end.php'; ?>

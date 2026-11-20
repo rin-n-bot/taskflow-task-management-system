@@ -1,4 +1,4 @@
-/* Task Flow: shared styles. Only classes listed in AGENTS.md are used. */
+/* Theme colors */
 
 body.theme-light {
     --bg: #f5f6fa;
@@ -32,6 +32,7 @@ body.theme-dark {
     --info-soft: #1c2740;
 }
 
+/* Base typography and links */
 * {
     box-sizing: border-box;
 }
@@ -69,6 +70,7 @@ p {
     margin: 0 0 0.75rem;
 }
 
+/* Page layout and sidebar */
 .container {
     width: 100%;
     max-width: 960px;
@@ -149,6 +151,7 @@ p {
     width: 100%;
 }
 
+/* Form panels */
 main > form:not(.row) {
     width: 100%;
     max-width: 640px;
@@ -159,6 +162,7 @@ main > form:not(.row) {
     box-shadow: 0 1px 3px rgb(31 36 48 / 6%);
 }
 
+/* Profile avatar */
 main > img[alt="Current profile avatar"] {
     width: 6rem;
     height: 6rem;
@@ -166,6 +170,7 @@ main > img[alt="Current profile avatar"] {
     object-fit: cover;
 }
 
+/* Focus indicators and buttons */
 a:focus-visible,
 button:focus-visible {
     outline: 3px solid var(--primary);
@@ -211,6 +216,7 @@ button:focus-visible {
     opacity: 0.9;
 }
 
+/* Form fields and validation */
 .field {
     display: flex;
     flex-direction: column;
@@ -266,6 +272,7 @@ button:focus-visible {
     font-size: 0.85rem;
 }
 
+/* Data tables */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -295,6 +302,7 @@ button:focus-visible {
     border-bottom: 0;
 }
 
+/* Task priority and status badges */
 .badge-low,
 .badge-medium,
 .badge-high,
@@ -330,6 +338,7 @@ button:focus-visible {
     color: var(--muted);
 }
 
+/* Alerts and empty states */
 .alert-success,
 .alert-error,
 .alert-info {
@@ -359,11 +368,13 @@ button:focus-visible {
     text-align: center;
 }
 
+/* Overdue task indicator */
 .is-overdue {
     color: var(--danger);
     font-weight: 600;
 }
 
+/* Dashboard summary cards */
 .content > main > section > .row {
     align-items: stretch;
 }
@@ -390,6 +401,92 @@ button:focus-visible {
     line-height: 1.2;
 }
 
+/* Authentication screens */
+body#auth-page .layout {
+    display: block;
+    min-height: 100vh;
+}
+
+body#auth-page .content {
+    min-height: 100vh;
+}
+
+body#auth-page main#auth-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: 0;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+body#auth-page main#auth-main > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: clamp(2rem, 6vw, 5rem);
+}
+
+body#auth-page main#auth-main > section:first-child {
+    justify-content: space-between;
+    background: var(--primary);
+    color: var(--primary-text);
+}
+
+body#auth-page main#auth-main > section:first-child > a {
+    align-self: flex-start;
+    color: inherit;
+    font-size: 1.1rem;
+}
+
+body#auth-page main#auth-main > section:first-child h1 {
+    max-width: 34rem;
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 3.4vw, 3rem);
+}
+
+body#auth-page main#auth-main > section:first-child p {
+    max-width: 36rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+}
+
+body#auth-page main#auth-main > section:last-child {
+    align-items: center;
+    background: var(--surface);
+}
+
+body#auth-page main#auth-main > section:last-child > div {
+    width: 100%;
+    max-width: 420px;
+}
+
+body#auth-page main#auth-main > section:last-child h2 {
+    margin-bottom: 0.35rem;
+    font-size: 2rem;
+}
+
+body#auth-page #auth-form {
+    width: 100%;
+    max-width: none;
+    margin-top: 1.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body#auth-page #auth-form > .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+}
+
+/* Small-screen layout */
 @media (max-width: 760px) {
     .layout {
         display: block;
@@ -415,5 +512,25 @@ button:focus-visible {
 
     main > form:not(.row) {
         padding: 1rem;
+    }
+
+    body#auth-page main#auth-main {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body#auth-page main#auth-main > section {
+        padding: 2rem 1.25rem;
+    }
+
+    body#auth-page main#auth-main > section:first-child {
+        min-height: 260px;
+    }
+
+    body#auth-page main#auth-main > section:first-child h1 {
+        font-size: 2rem;
+    }
+
+    body#auth-page main#auth-main > section:last-child {
+        min-height: 540px;
     }
 }

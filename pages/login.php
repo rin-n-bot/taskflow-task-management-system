@@ -79,43 +79,62 @@ $page_title = 'Log in';
 require_once BASE_PATH . '/includes/header.php';
 ?>
 
-<h1>Log in</h1>
+<section aria-labelledby="login-promo-heading">
+    <a href="<?php echo BASE_URL; ?>/index.php"><strong>Task Flow</strong></a>
+    <div>
+        <h1 id="login-promo-heading">Bring your team's work into focus.</h1>
+        <p>Projects, tasks, and progress stay together, so everyone can see what needs attention.</p>
+    </div>
+    <p>Plan the work. Share progress. Finish together.</p>
+</section>
 
-<?php if (isset($_GET['registered'])): ?>
-    <div class="alert-success">Account created. You can log in now.</div>
-<?php endif; ?>
+<section aria-labelledby="login-heading">
+    <div>
+        <h2 id="login-heading">Welcome back</h2>
+        <p>Login to continue.</p>
 
-<?php if (isset($errors['general'])): ?>
-    <div class="alert-error"><?php echo e($errors['general']); ?></div>
-<?php endif; ?>
-
-<form method="post" action="<?php echo BASE_URL; ?>/pages/login.php">
-    <div class="field<?php echo isset($errors['email']) ? ' has-error' : ''; ?>">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<?php echo e($email); ?>">
-        <?php if (isset($errors['email'])): ?>
-            <span class="error"><?php echo e($errors['email']); ?></span>
+        <?php if (isset($_GET['registered'])): ?>
+            <div class="alert-success">Account created. You can log in now.</div>
         <?php endif; ?>
-    </div>
 
-    <div class="field<?php echo isset($errors['password']) ? ' has-error' : ''; ?>">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-        <?php if (isset($errors['password'])): ?>
-            <span class="error"><?php echo e($errors['password']); ?></span>
+        <?php if (isset($errors['general'])): ?>
+            <div class="alert-error"><?php echo e($errors['general']); ?></div>
         <?php endif; ?>
+
+        <form id="auth-form" method="post" action="<?php echo BASE_URL; ?>/pages/login.php">
+            <div class="field<?php echo isset($errors['email']) ? ' has-error' : ''; ?>">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" autocomplete="username" value="<?php echo e($email); ?>">
+                <?php if (isset($errors['email'])): ?>
+                    <span class="error"><?php echo e($errors['email']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="field<?php echo isset($errors['password']) ? ' has-error' : ''; ?>">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password">
+                <?php if (isset($errors['password'])): ?>
+                    <span class="error"><?php echo e($errors['password']); ?></span>
+                <?php endif; ?>
+            </div>
+
+            <div class="field">
+                <label>
+                    <input type="checkbox" name="remember" value="1" <?php echo $remember ? 'checked' : ''; ?>>
+                    Remember my email
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <p>New to Task Flow? <a href="<?php echo BASE_URL; ?>/pages/register.php">Create an account</a></p>
+        <p>
+            <a href="<?php echo BASE_URL; ?>/pages/theme.php?theme=<?php echo e($next_theme); ?>">
+                Use <?php echo $theme === 'dark' ? 'light' : 'dark'; ?> mode
+            </a>
+        </p>
     </div>
-
-    <div class="field">
-        <label>
-            <input type="checkbox" name="remember" value="1" <?php echo $remember ? 'checked' : ''; ?>>
-            Remember my email
-        </label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Log in</button>
-</form>
-
-<p>No account yet? <a href="<?php echo BASE_URL; ?>/pages/register.php">Register</a></p>
+</section>
 
 <?php require_once BASE_PATH . '/includes/layout_end.php'; ?>
