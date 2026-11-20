@@ -87,6 +87,8 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - All forms: validate on the server, show errors above the form, keep submitted values after an error.
 - All DB operations in `try/catch`: log technical errors to `logs/error.log`, show only friendly messages.
 - Invalid or missing ID (e.g. in `edit.php`, `view.php`) → friendly message + redirect.
+- Navigation and the theme toggle use the shared left sidebar. On small screens,
+  the sidebar moves above the main content.
 
 ### 4.1 Auth
 - Register: name, email, password, confirm. Unique email check, `password_hash()`.

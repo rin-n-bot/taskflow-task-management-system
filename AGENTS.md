@@ -77,8 +77,11 @@ work on assigned tasks. Two roles, four related tables.
 
 ## UI standards
 - Use only classes in `assets/css/style.css`: `container`, `row`, `stack`,
-  `nav`, `btn`, `btn-primary`, `btn-danger`, `field`, `field.has-error`,
-  `error`, `table`, `badge-*`, `alert-*`, `empty`, `is-overdue`.
+  `layout`, `sidebar`, `content`, `btn`, `btn-primary`, `btn-danger`, `field`,
+  `field.has-error`, `error`, `table`, `badge-*`, `alert-*`, `empty`,
+  `is-overdue`.
+- Shared navigation and the theme toggle use the left sidebar; it moves above
+  the main content on small screens.
 - No inline styles. No new classes per page. If a pattern is missing, ask.
 - Theme: `body.theme-light` / `body.theme-dark` + CSS variables. Cookie
   accepts `light` or `dark` only.

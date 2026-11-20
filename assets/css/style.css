@@ -86,31 +86,58 @@ p {
     padding-bottom: 2rem;
 }
 
-.nav {
+.layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.sidebar {
     background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    padding: 1.25rem;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
 }
 
-.nav > .container {
+.sidebar > a {
+    color: var(--text);
+    font-size: 1.2rem;
+}
+
+.sidebar nav {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 1.5rem;
 }
 
-.nav nav a {
-    padding: 0.35rem 0.5rem;
+.sidebar nav a {
+    display: block;
+    padding: 0.6rem 0.75rem;
     border-radius: 6px;
     color: var(--muted);
 }
 
-.nav nav a:hover {
+.sidebar nav a:hover {
     background: var(--surface-alt);
     color: var(--text);
     text-decoration: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100vh;
+}
+
+.content > main {
+    flex: 1;
+    width: 100%;
 }
 
 .btn {
@@ -307,4 +334,28 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+@media (max-width: 760px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+    }
+
+    .sidebar nav a {
+        padding: 0.45rem 0.55rem;
+    }
 }

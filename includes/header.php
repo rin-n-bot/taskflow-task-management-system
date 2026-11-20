@@ -20,11 +20,11 @@ $next_theme = $theme === 'dark' ? 'light' : 'dark';
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
 </head>
 <body class="theme-<?php echo e($theme); ?>">
-    <header class="nav">
-        <div class="container row">
+    <div class="layout">
+        <aside class="sidebar">
             <a href="<?php echo BASE_URL; ?>/index.php"><strong>Task Flow</strong></a>
 
-            <nav class="row">
+            <nav aria-label="Main navigation">
                 <?php if (isLoggedIn()): ?>
                     <a href="<?php echo BASE_URL; ?>/pages/dashboard.php">Dashboard</a>
                     <a href="<?php echo BASE_URL; ?>/pages/tasks/index.php">Tasks</a>
@@ -42,7 +42,7 @@ $next_theme = $theme === 'dark' ? 'light' : 'dark';
                     <?php echo $theme === 'dark' ? 'Light mode' : 'Dark mode'; ?>
                 </a>
             </nav>
-        </div>
-    </header>
+        </aside>
 
-    <main class="container stack">
+        <div class="content">
+            <main class="container stack">
