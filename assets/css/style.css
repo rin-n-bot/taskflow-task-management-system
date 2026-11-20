@@ -159,6 +159,26 @@ main > form:not(.row) {
     box-shadow: 0 1px 3px rgb(31 36 48 / 6%);
 }
 
+main > form.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    align-items: end;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+}
+
+main > form.row > .field {
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+main > form.row > .btn {
+    justify-self: start;
+}
+
 a:focus-visible,
 button:focus-visible {
     outline: 3px solid var(--primary);
@@ -268,6 +288,13 @@ button:focus-visible {
     overflow: hidden;
 }
 
+.table[data-row-list] {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
 .table th,
 .table td {
     padding: 0.6rem 0.75rem;
@@ -295,6 +322,7 @@ button:focus-visible {
 .badge-in-progress,
 .badge-done {
     display: inline-block;
+    white-space: nowrap;
     padding: 0.1rem 0.5rem;
     border-radius: 999px;
     font-size: 0.78rem;
@@ -321,6 +349,65 @@ button:focus-visible {
 .badge-todo {
     background: var(--surface-alt);
     color: var(--muted);
+}
+
+[data-row-actions-trigger] {
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+    padding: 0.2rem;
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+#row-actions-dialog {
+    width: min(28rem, calc(100% - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    margin: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 20px 60px rgb(15 23 42 / 24%);
+}
+
+#row-actions-dialog::backdrop {
+    background: rgb(15 23 42 / 48%);
+}
+
+#row-actions-dialog [hidden] {
+    display: none !important;
+}
+
+#row-actions-dialog > .row {
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+#row-actions-dialog > .row h2 {
+    margin: 0;
+}
+
+#row-actions-dialog [data-dialog-links] {
+    margin-bottom: 0.75rem;
+}
+
+#row-actions-dialog [data-role-form] {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#row-actions-dialog [data-delete-form] {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
 }
 
 .alert-success,
@@ -393,6 +480,15 @@ footer p {
     }
 
     main > form:not(.row) {
+        padding: 1rem;
+    }
+
+    main > form.row {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0.85rem;
+    }
+
+    #row-actions-dialog {
         padding: 1rem;
     }
 }

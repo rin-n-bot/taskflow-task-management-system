@@ -71,6 +71,7 @@ taskflow/
 │   ├── tasks/{index,create,edit,delete,view,comment_delete}.php
 │   └── admin/{users.php, export.php}
 ├── assets/css/style.css
+├── assets/js/app.js
 ├── uploads/  (+ .htaccess)
 ├── logs/error.log
 ├── database/taskflow.sql
@@ -89,6 +90,8 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - Invalid or missing ID (e.g. in `edit.php`, `view.php`) → friendly message + redirect.
 - Navigation and the theme toggle use the shared left sidebar. On small screens,
   the sidebar moves above the main content.
+- Table row actions use a shared ellipsis button and dialog. Delete actions stay
+  POST forms and ask for confirmation.
 
 ### 4.1 Auth
 - Register: name, email, password, confirm. Unique email check, `password_hash()`.
@@ -110,6 +113,7 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 ### 4.4 Tasks
 - Admin: list all, filter by status/priority/assignee/project/keyword (GET), full CRUD. Delete with confirm.
 - Member: list own only, same filters except assignee. Can open `view.php` and update status only.
+- Task filters have clear labels and separate apply/clear controls.
 - Fields: project, assigned member, title, description, priority, status, due_date.
 - Assignee dropdown lists members only.
 - Past due dates allowed (needed for overdue).

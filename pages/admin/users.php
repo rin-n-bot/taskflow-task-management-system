@@ -131,7 +131,7 @@ require_once BASE_PATH . '/includes/header.php';
 <?php if (empty($users)): ?>
     <p class="empty">No users found.</p>
 <?php else: ?>
-    <table class="table">
+    <table class="table" data-row-list>
         <thead>
             <tr>
                 <th>Name</th>
@@ -153,23 +153,18 @@ require_once BASE_PATH . '/includes/header.php';
                         <?php if ($is_self): ?>
                             <span class="empty">You</span>
                         <?php else: ?>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php" class="row">
-                                <input type="hidden" name="action" value="change_role">
-                                <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
-                                <select name="role">
-                                    <?php foreach ($roles as $value => $label): ?>
-                                        <option value="<?php echo e($value); ?>" <?php echo $user['role'] === $value ? 'selected' : ''; ?>>
-                                            <?php echo e($label); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <button type="submit" class="btn btn-primary">Change role</button>
-                            </form>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php" class="row" onsubmit="return confirm('Delete this user? Their owned tasks and projects must be reassigned or deleted first.');">
-                                <input type="hidden" name="action" value="delete_user">
-                                <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Delete user</button>
-                            </form>
+                            <button type="button" class="btn" data-row-actions-trigger
+                                data-dialog-title="User actions"
+                                data-record-label="<?php echo e($user['name']); ?>"
+                                data-role-url="<?php echo BASE_URL; ?>/pages/admin/users.php"
+                                data-user-id="<?php echo (int) $user['id']; ?>"
+                                data-user-role="<?php echo e($user['role']); ?>"
+                                data-delete-url="<?php echo BASE_URL; ?>/pages/admin/users.php"
+                                data-delete-action="delete_user"
+                                data-delete-field="user_id"
+                                data-delete-id="<?php echo (int) $user['id']; ?>"
+                                data-delete-message="Delete this user? Their owned tasks and projects must be reassigned or deleted first."
+                                aria-label="More actions for <?php echo e($user['name']); ?>">&hellip;</button>
                         <?php endif; ?>
                     </td>
                 </tr>

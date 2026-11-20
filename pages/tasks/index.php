@@ -136,6 +136,9 @@ require_once BASE_PATH . '/includes/header.php';
     </div>
 <?php endif; ?>
 
+<h2>Filter tasks</h2>
+<p>Choose any filters you need. A task must match every selected filter.</p>
+
 <form method="get" action="<?php echo BASE_URL; ?>/pages/tasks/index.php" class="row">
     <div class="field">
         <label for="status">Status</label>
@@ -188,20 +191,20 @@ require_once BASE_PATH . '/includes/header.php';
     <?php endif; ?>
 
     <div class="field">
-        <label for="keyword">Keyword</label>
-        <input type="text" id="keyword" name="keyword" value="<?php echo e($keyword); ?>">
+        <label for="keyword">Task title</label>
+        <input type="search" id="keyword" name="keyword" value="<?php echo e($keyword); ?>" placeholder="Search by title">
     </div>
 
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="btn btn-primary">Apply filters</button>
     <?php if ($has_filters): ?>
-        <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/index.php">Clear</a>
+        <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/index.php">Clear filters</a>
     <?php endif; ?>
 </form>
 
 <?php if ($db_error === '' && empty($tasks)): ?>
     <p class="empty">No tasks found.</p>
 <?php elseif (!empty($tasks)): ?>
-    <table class="table">
+    <table class="table" data-row-list>
         <thead>
             <tr>
                 <th>Title</th>
@@ -231,18 +234,18 @@ require_once BASE_PATH . '/includes/header.php';
                     </td>
                     <td><?php echo e(date('M j, Y', strtotime($task['due_date']))); ?></td>
                     <td>
-                        <?php if ($is_admin): ?>
-                            <div class="row">
-                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
-                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/edit.php?id=<?php echo (int) $task['id']; ?>">Edit</a>
-                                <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/delete.php" onsubmit="return confirm('Delete this task? Its comments will also be deleted.');">
-                                    <input type="hidden" name="id" value="<?php echo (int) $task['id']; ?>">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        <?php else: ?>
-                            <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
-                        <?php endif; ?>
+                        <button type="button" class="btn" data-row-actions-trigger
+                            data-dialog-title="Task actions"
+                            data-record-label="<?php echo e($task['title']); ?>"
+                            data-view-url="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>"
+                            <?php if ($is_admin): ?>
+                                data-edit-url="<?php echo BASE_URL; ?>/pages/tasks/edit.php?id=<?php echo (int) $task['id']; ?>"
+                                data-delete-url="<?php echo BASE_URL; ?>/pages/tasks/delete.php"
+                                data-delete-field="id"
+                                data-delete-id="<?php echo (int) $task['id']; ?>"
+                                data-delete-message="Delete this task? Its comments will also be deleted."
+                            <?php endif; ?>
+                            aria-label="More actions for <?php echo e($task['title']); ?>">&hellip;</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -85,7 +85,7 @@ require_once BASE_PATH . '/includes/header.php';
 <?php if ($db_error === '' && empty($projects)): ?>
     <p class="empty">No projects found.</p>
 <?php elseif (!empty($projects)): ?>
-    <table class="table">
+    <table class="table" data-row-list>
         <thead>
             <tr>
                 <th>Title</th>
@@ -103,13 +103,15 @@ require_once BASE_PATH . '/includes/header.php';
                     <td><?php echo e($project['creator_name']); ?></td>
                     <td><?php echo e(date('M j, Y', strtotime($project['created_at']))); ?></td>
                     <td>
-                        <div class="row">
-                            <a class="btn" href="<?php echo BASE_URL; ?>/pages/projects/edit.php?id=<?php echo (int) $project['id']; ?>">Edit</a>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/projects/delete.php" onsubmit="return confirm('Delete this project? Its tasks and comments will also be deleted.');">
-                                <input type="hidden" name="id" value="<?php echo (int) $project['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
+                        <button type="button" class="btn" data-row-actions-trigger
+                            data-dialog-title="Project actions"
+                            data-record-label="<?php echo e($project['title']); ?>"
+                            data-edit-url="<?php echo BASE_URL; ?>/pages/projects/edit.php?id=<?php echo (int) $project['id']; ?>"
+                            data-delete-url="<?php echo BASE_URL; ?>/pages/projects/delete.php"
+                            data-delete-field="id"
+                            data-delete-id="<?php echo (int) $project['id']; ?>"
+                            data-delete-message="Delete this project? Its tasks and comments will also be deleted."
+                            aria-label="More actions for <?php echo e($project['title']); ?>">&hellip;</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
