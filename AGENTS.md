@@ -19,8 +19,8 @@ work on assigned tasks. Two roles, four related tables.
 ## PHP standards
 - Procedural only. No OOP, classes, namespaces, traits, interfaces, `match`,
   arrow functions, strict types.
-- No frameworks, no Composer for app logic, no JS/CSS libraries. Minimal
-  vanilla JavaScript is allowed for shared row-action dialogs and delete confirmation.
+- No frameworks, no Composer for app logic, no JS/CSS libraries. Minimal JS
+  only (`confirm()` on delete).
 - Code must be simple enough for a student to explain line by line.
 - 4-space indent. One blank line between functions and top-level blocks.
 - Comment: validation rules, access checks, prepared statements, non-obvious
@@ -82,8 +82,6 @@ work on assigned tasks. Two roles, four related tables.
   `is-overdue`.
 - Shared navigation and the theme toggle use the left sidebar; it moves above
   the main content on small screens.
-- Table row actions use a shared ellipsis button and dialog; destructive actions
-  remain POST forms with confirmation.
 - No inline styles. No new classes per page. If a pattern is missing, ask.
 - Theme: `body.theme-light` / `body.theme-dark` + CSS variables. Cookie
   accepts `light` or `dark` only.

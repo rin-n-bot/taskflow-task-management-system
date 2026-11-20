@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 try {
     $stmt = $pdo->prepare(
-        'SELECT c.id, c.user_id, c.body, c.created_at, u.name AS commenter_name
+        'SELECT c.id, c.body, c.created_at, u.name AS commenter_name
          FROM comments c
          JOIN users u ON c.user_id = u.id
          WHERE c.task_id = ?
@@ -181,7 +181,7 @@ require_once BASE_PATH . '/includes/header.php';
 <?php if (empty($comments)): ?>
     <p class="empty">No comments yet.</p>
 <?php else: ?>
-    <table class="table" data-row-list>
+    <table class="table">
         <thead>
             <tr>
                 <th>Commenter</th>
@@ -198,16 +198,11 @@ require_once BASE_PATH . '/includes/header.php';
                     <td><?php echo e(date('M j, Y \a\t H:i', strtotime($comment['created_at']))); ?></td>
                     <td>
                         <?php if ($is_admin || (int) $comment['user_id'] === $user_id): ?>
-                            <button type="button" class="btn" data-row-actions-trigger
-                                data-dialog-title="Comment actions"
-                                data-record-label="Comment by <?php echo e($comment['commenter_name']); ?>"
-                                data-delete-url="<?php echo BASE_URL; ?>/pages/tasks/comment_delete.php"
-                                data-delete-field="id"
-                                data-delete-id="<?php echo (int) $comment['id']; ?>"
-                                data-delete-extra-field="task_id"
-                                data-delete-extra-value="<?php echo (int) $task['id']; ?>"
-                                data-delete-message="Delete this comment?"
-                                aria-label="More actions for comment by <?php echo e($comment['commenter_name']); ?>">&hellip;</button>
+                            <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/comment_delete.php" onsubmit="return confirm('Delete this comment?');">
+                                <input type="hidden" name="id" value="<?php echo (int) $comment['id']; ?>">
+                                <input type="hidden" name="task_id" value="<?php echo (int) $task['id']; ?>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         <?php endif; ?>
                     </td>
                 </tr>
