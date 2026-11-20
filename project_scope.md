@@ -22,7 +22,6 @@ App spec for `AGENTS.md`. Rules live there. Professor's rubric lives in `final_p
 | Add comments | Yes | Only on own tasks |
 | Delete comments | Any | Own only |
 | Manage users (role, delete) | Yes | No |
-| Export tasks to CSV | Yes | No |
 
 New registrations always get role `member`. The admin account is seeded in SQL.
 
@@ -69,7 +68,7 @@ taskflow/
 │   ├── login.php, register.php, logout.php, dashboard.php, profile.php, theme.php
 │   ├── projects/{index,create,edit,delete}.php
 │   ├── tasks/{index,create,edit,delete,view,comment_delete}.php
-│   └── admin/{users.php, export.php}
+│   └── admin/users.php
 ├── assets/css/style.css
 ├── uploads/  (+ .htaccess)
 ├── logs/error.log
@@ -132,14 +131,11 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - Edit name.
 - Upload avatar: JPG/PNG only, ≤ 2 MB, unique filename in `uploads/`, save filename in `users.avatar`. Clear message for wrong type / too large / upload error.
 
-### 4.8 CSV Export (admin)
-- Output all tasks (JOIN project + assignee) via `fopen('php://output')` + `fputcsv()`.
-
-### 4.9 Optional (only after core is tested)
+### 4.8 Optional (only after core is tested)
 - Board view: To Do / In Progress / Done columns, "Move to..." dropdown via POST form. No drag-and-drop, no JS.
 - Overdue highlight: red when `due_date < today` and `status != done`.
 
-### 4.10 Out of scope
+### 4.9 Out of scope
 Drag-and-drop, AJAX, real-time, email notifications, REST APIs, frameworks, JS libraries, multi-tenancy, task attachments, password reset, password change page.
 
 ---
@@ -160,12 +156,11 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 | 8 | Comments | add + delete with role/ownership | 12 |
 | 9 | Users | list, change role, delete + SQLSTATE 23000 catch | 15–16 |
 | 10 | Profile | name + avatar upload | 17 |
-| 11 | CSV export | `fputcsv('php://output')` | 17 |
-| 12 | Dashboard | role-aware counts, overdue, theme cookie | 14 |
-| 13 | Audit + docs | walk every file against `AGENTS.md`; README + 20-row test log; manuscript | 13, 17 |
-| 14 | Presentation | Demo: DB → register/login → CRUD → filters → roles → validation → errors → code walkthrough | 18 |
+| 11 | Dashboard | role-aware counts, overdue, theme cookie | 14 |
+| 12 | Audit + docs | walk every file against `AGENTS.md`; README + 20-row test log; manuscript | 13, 17 |
+| 13 | Presentation | Demo: DB → register/login → CRUD → filters → roles → validation → errors → code walkthrough | 18 |
 
-Functions are added when first needed: `sanitize`, `e`, `logError` at scaffold; `validateUser` in Phase 4; `validateTask` in Phase 7; `exportTasksCsv` in Phase 11. Full list and signatures live in `AGENTS.md`.
+Functions are added when first needed: `sanitize`, `e`, `logError` at scaffold; `validateUser` in Phase 4; `validateTask` in Phase 7. Full list and signatures live in `AGENTS.md`.
 
 ---
 
@@ -177,7 +172,7 @@ Functions are added when first needed: `sanitize`, `e`, `logError` at scaffold; 
 - [ ] GET + POST used correctly
 - [ ] Server-side validation on all forms
 - [ ] Sessions + cookies
-- [ ] File handling (upload, log, export)
+- [ ] File handling (avatar upload and error log)
 - [ ] 3+ related tables with PKs/FKs
 - [ ] Full CRUD on ≥ 2 tables
 - [ ] JOIN query displaying related data
@@ -217,6 +212,6 @@ Record in a table: `Test Case | Input | Expected | Actual | Pass/Fail`.
 15. Delete project → confirm → record + its tasks/comments gone.
 16. Search with no matches → "No results" message.
 17. Upload non-image avatar → rejected with message.
-18. Admin exports CSV → downloads, opens correctly.
+18. Avatar upload larger than 2 MB → rejected with a clear message.
 19. Admin deletes own account → blocked.
 20. Member updates own task status → saved.

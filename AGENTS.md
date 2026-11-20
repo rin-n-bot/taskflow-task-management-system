@@ -90,13 +90,12 @@ work on assigned tasks. Two roles, four related tables.
 
 ## Required functions (do not rename)
 - `includes/functions.php`: `sanitize`, `e`, `logError`, `validateTask`,
-  `validateUser`, `exportTasksCsv`.
+  `validateUser`.
 - `includes/auth.php`: `isLoggedIn`, `requireLogin`, `requireRole`.
 
 ## Workflow
 - **One phase per prompt.** Never build the whole app at once.
-- One-shot is fine only for pure boilerplate: scaffold, SQL seed, CSV export,
-  docs.
+- One-shot is fine only for pure boilerplate: scaffold, SQL seed, docs.
 - Every other feature = vertical slice (form + handler + query in the same
   file), tested before starting the next phase.
 - After each phase: read every file, run the relevant test cases from
