@@ -3,7 +3,7 @@
 require_once dirname(__DIR__, 2) . '/config/database.php';
 require_once BASE_PATH . '/includes/auth.php';
 
-requireLogin();
+requireRole('admin');
 
 $page_title = 'Edit task';
 require_once BASE_PATH . '/includes/header.php';

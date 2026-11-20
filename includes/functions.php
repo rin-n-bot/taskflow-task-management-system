@@ -76,3 +76,23 @@ function validateProject($data)
 
     return $errors;
 }
+
+// Allowed task statuses with their display labels.
+function taskStatuses()
+{
+    return [
+        'todo' => 'To do',
+        'in_progress' => 'In progress',
+        'done' => 'Done',
+    ];
+}
+
+// Allowed task priorities with their display labels.
+function taskPriorities()
+{
+    return [
+        'low' => 'Low',
+        'medium' => 'Medium',
+        'high' => 'High',
+    ];
+}
