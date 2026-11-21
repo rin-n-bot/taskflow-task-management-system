@@ -83,7 +83,6 @@ require_once BASE_PATH . '/includes/header.php';
     <a href="<?php echo BASE_URL; ?>/index.php"><strong>Task Flow</strong></a>
     <div>
         <h1 id="login-promo-heading">Bring your team's work into focus.</h1>
-        <p>Projects, tasks, and progress stay together, so everyone can see what needs attention.</p>
     </div>
     <p>Plan the work. Share progress. Finish together.</p>
 </section>

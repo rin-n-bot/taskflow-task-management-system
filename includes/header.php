@@ -4,6 +4,7 @@ require_once BASE_PATH . '/includes/auth.php';
 
 $page_title = $page_title ?? 'Task Flow';
 $is_auth_page = in_array($page_title, ['Log in', 'Register'], true);
+$has_action_dialogs = in_array($page_title, ['Tasks', 'Projects', 'Users'], true);
 
 // Theme preference comes from a cookie; only light or dark is accepted.
 $theme = 'light';
@@ -18,7 +19,10 @@ $next_theme = $theme === 'dark' ? 'light' : 'dark';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo e($page_title); ?> | Task Flow</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css?v=<?php echo filemtime(BASE_PATH . '/assets/css/style.css'); ?>">
+    <?php if ($has_action_dialogs): ?>
+        <script src="<?php echo BASE_URL; ?>/assets/js/action-dialog.js" defer></script>
+    <?php endif; ?>
 </head>
 <body class="theme-<?php echo e($theme); ?>"<?php echo $is_auth_page ? ' id="auth-page"' : ''; ?>>
     <div class="layout">

@@ -150,27 +150,39 @@ require_once BASE_PATH . '/includes/header.php';
                     <td><?php echo e(ucfirst($user['role'])); ?></td>
                     <td><?php echo e(date('M j, Y', strtotime($user['created_at']))); ?></td>
                     <td>
-                        <?php if ($is_self): ?>
-                            <span class="empty">You</span>
-                        <?php else: ?>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php" class="row">
-                                <input type="hidden" name="action" value="change_role">
-                                <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
-                                <select name="role">
-                                    <?php foreach ($roles as $value => $label): ?>
-                                        <option value="<?php echo e($value); ?>" <?php echo $user['role'] === $value ? 'selected' : ''; ?>>
-                                            <?php echo e($label); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <button type="submit" class="btn btn-primary">Change role</button>
-                            </form>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php" class="row" onsubmit="return confirm('Delete this user? Their owned tasks and projects must be reassigned or deleted first.');">
-                                <input type="hidden" name="action" value="delete_user">
-                                <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Delete user</button>
-                            </form>
-                        <?php endif; ?>
+                        <button type="button" class="btn" aria-label="Open actions for <?php echo e($user['name']); ?>" aria-haspopup="dialog" aria-controls="user-actions-<?php echo (int) $user['id']; ?>" data-action-dialog="user-actions-<?php echo (int) $user['id']; ?>">&#8942;</button>
+                        <dialog id="user-actions-<?php echo (int) $user['id']; ?>" aria-labelledby="user-actions-title-<?php echo (int) $user['id']; ?>">
+                            <div>
+                                <header>
+                                    <h2 id="user-actions-title-<?php echo (int) $user['id']; ?>">User actions</h2>
+                                    <form method="dialog">
+                                        <button type="submit" class="btn" aria-label="Close actions">&times;</button>
+                                    </form>
+                                </header>
+                                <p><?php echo e($user['name']); ?></p>
+                                <?php if ($is_self): ?>
+                                    <p>You cannot change or delete your own account.</p>
+                                <?php else: ?>
+                                    <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php">
+                                        <input type="hidden" name="action" value="change_role">
+                                        <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
+                                        <select name="role" aria-label="Role for <?php echo e($user['name']); ?>">
+                                            <?php foreach ($roles as $value => $label): ?>
+                                                <option value="<?php echo e($value); ?>" <?php echo $user['role'] === $value ? 'selected' : ''; ?>>
+                                                    <?php echo e($label); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary">Change role</button>
+                                    </form>
+                                    <form method="post" action="<?php echo BASE_URL; ?>/pages/admin/users.php" onsubmit="return confirm('Delete this user? Their owned tasks and projects must be reassigned or deleted first.');">
+                                        <input type="hidden" name="action" value="delete_user">
+                                        <input type="hidden" name="user_id" value="<?php echo (int) $user['id']; ?>">
+                                        <button type="submit" class="btn btn-danger">Delete user</button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
+                        </dialog>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -231,18 +231,26 @@ require_once BASE_PATH . '/includes/header.php';
                     </td>
                     <td><?php echo e(date('M j, Y', strtotime($task['due_date']))); ?></td>
                     <td>
-                        <?php if ($is_admin): ?>
-                            <div class="row">
+                        <button type="button" class="btn" aria-label="Open actions for <?php echo e($task['title']); ?>" aria-haspopup="dialog" aria-controls="task-actions-<?php echo (int) $task['id']; ?>" data-action-dialog="task-actions-<?php echo (int) $task['id']; ?>">&#8942;</button>
+                        <dialog id="task-actions-<?php echo (int) $task['id']; ?>" aria-labelledby="task-actions-title-<?php echo (int) $task['id']; ?>">
+                            <div>
+                                <header>
+                                    <h2 id="task-actions-title-<?php echo (int) $task['id']; ?>">Task actions</h2>
+                                    <form method="dialog">
+                                        <button type="submit" class="btn" aria-label="Close actions">&times;</button>
+                                    </form>
+                                </header>
+                                <p><?php echo e($task['title']); ?></p>
                                 <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
-                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/edit.php?id=<?php echo (int) $task['id']; ?>">Edit</a>
-                                <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/delete.php" onsubmit="return confirm('Delete this task? Its comments will also be deleted.');">
-                                    <input type="hidden" name="id" value="<?php echo (int) $task['id']; ?>">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                <?php if ($is_admin): ?>
+                                    <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/edit.php?id=<?php echo (int) $task['id']; ?>">Edit</a>
+                                    <form method="post" action="<?php echo BASE_URL; ?>/pages/tasks/delete.php" onsubmit="return confirm('Delete this task? Its comments will also be deleted.');">
+                                        <input type="hidden" name="id" value="<?php echo (int) $task['id']; ?>">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                <?php endif; ?>
                             </div>
-                        <?php else: ?>
-                            <a class="btn" href="<?php echo BASE_URL; ?>/pages/tasks/view.php?id=<?php echo (int) $task['id']; ?>">View</a>
-                        <?php endif; ?>
+                        </dialog>
                     </td>
                 </tr>
             <?php endforeach; ?>

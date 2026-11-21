@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 try {
     $stmt = $pdo->prepare(
-        'SELECT c.id, c.body, c.created_at, u.name AS commenter_name
+        'SELECT c.id, c.user_id, c.body, c.created_at, u.name AS commenter_name
          FROM comments c
          JOIN users u ON c.user_id = u.id
          WHERE c.task_id = ?

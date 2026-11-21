@@ -19,8 +19,8 @@ work on assigned tasks. Two roles, four related tables.
 ## PHP standards
 - Procedural only. No OOP, classes, namespaces, traits, interfaces, `match`,
   arrow functions, strict types.
-- No frameworks, no Composer for app logic, no JS/CSS libraries. Minimal JS
-  only (`confirm()` on delete).
+- No frameworks, no Composer for app logic, no JS/CSS libraries. Minimal plain
+  JavaScript is allowed for row action dialogs and delete confirmation.
 - Code must be simple enough for a student to explain line by line.
 - 4-space indent. One blank line between functions and top-level blocks.
 - Comment: validation rules, access checks, prepared statements, non-obvious

@@ -70,6 +70,7 @@ taskflow/
 │   ├── tasks/{index,create,edit,delete,view,comment_delete}.php
 │   └── admin/users.php
 ├── assets/css/style.css
+├── assets/js/action-dialog.js
 ├── uploads/  (+ .htaccess)
 ├── logs/error.log
 ├── database/taskflow.sql
@@ -91,6 +92,9 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
   the form.
 - Other pages use the shared left sidebar for navigation and the theme toggle.
   On small screens, the sidebar moves above the main content.
+- Task, project, and admin user list actions open in a modal from a three-dot
+  button. Give the modal clear spacing, a close button, Escape-key support, and
+  backdrop dismissal. Keep existing role and self-account restrictions.
 - Pages do not display a footer. The shared layout closes through
   `includes/layout_end.php`.
 

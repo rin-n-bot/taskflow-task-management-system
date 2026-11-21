@@ -103,13 +103,23 @@ require_once BASE_PATH . '/includes/header.php';
                     <td><?php echo e($project['creator_name']); ?></td>
                     <td><?php echo e(date('M j, Y', strtotime($project['created_at']))); ?></td>
                     <td>
-                        <div class="row">
-                            <a class="btn" href="<?php echo BASE_URL; ?>/pages/projects/edit.php?id=<?php echo (int) $project['id']; ?>">Edit</a>
-                            <form method="post" action="<?php echo BASE_URL; ?>/pages/projects/delete.php" onsubmit="return confirm('Delete this project? Its tasks and comments will also be deleted.');">
-                                <input type="hidden" name="id" value="<?php echo (int) $project['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
+                        <button type="button" class="btn" aria-label="Open actions for <?php echo e($project['title']); ?>" aria-haspopup="dialog" aria-controls="project-actions-<?php echo (int) $project['id']; ?>" data-action-dialog="project-actions-<?php echo (int) $project['id']; ?>">&#8942;</button>
+                        <dialog id="project-actions-<?php echo (int) $project['id']; ?>" aria-labelledby="project-actions-title-<?php echo (int) $project['id']; ?>">
+                            <div>
+                                <header>
+                                    <h2 id="project-actions-title-<?php echo (int) $project['id']; ?>">Project actions</h2>
+                                    <form method="dialog">
+                                        <button type="submit" class="btn" aria-label="Close actions">&times;</button>
+                                    </form>
+                                </header>
+                                <p><?php echo e($project['title']); ?></p>
+                                <a class="btn" href="<?php echo BASE_URL; ?>/pages/projects/edit.php?id=<?php echo (int) $project['id']; ?>">Edit</a>
+                                <form method="post" action="<?php echo BASE_URL; ?>/pages/projects/delete.php" onsubmit="return confirm('Delete this project? Its tasks and comments will also be deleted.');">
+                                    <input type="hidden" name="id" value="<?php echo (int) $project['id']; ?>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </dialog>
                     </td>
                 </tr>
             <?php endforeach; ?>
