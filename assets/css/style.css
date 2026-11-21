@@ -16,22 +16,6 @@ body.theme-light {
     --info-soft: #e8f0fe;
 }
 
-body.theme-dark {
-    --bg: #12141a;
-    --surface: #1b1e26;
-    --surface-alt: #232733;
-    --text: #e7e9ee;
-    --muted: #9aa1b1;
-    --border: #333845;
-    --primary: #60a5fa;
-    --primary-text: #0f1117;
-    --danger: #f87171;
-    --danger-soft: #3a1d1d;
-    --success: #4ade80;
-    --success-soft: #16301f;
-    --info-soft: #1c2740;
-}
-
 /* Base typography and links */
 * {
     box-sizing: border-box;

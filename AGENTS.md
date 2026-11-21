@@ -80,15 +80,14 @@ work on assigned tasks. Two roles, four related tables.
   `layout`, `sidebar`, `content`, `btn`, `btn-primary`, `btn-danger`, `field`,
   `field.has-error`, `error`, `table`, `badge-*`, `alert-*`, `empty`,
   `is-overdue`.
-- Shared navigation and the theme toggle use the left sidebar; it moves above
-  the main content on small screens. Login and registration screens use a split
-  layout without the sidebar and keep the theme toggle and link to the other auth
-  action beside the form.
+- Shared navigation uses the left sidebar; it moves above the main content on
+  small screens. Login and registration screens use a split layout without the
+  sidebar and link to the other auth action beside the form.
 - Pages do not display a shared footer. `includes/layout_end.php` closes the
   shared page layout.
 - No inline styles. No new classes per page. If a pattern is missing, ask.
-- Theme: `body.theme-light` / `body.theme-dark` + CSS variables. Cookie
-  accepts `light` or `dark` only.
+- Theme: use the light color variables in `body.theme-light`. Dark mode is not
+  part of this project.
 
 ## Required functions (do not rename)
 - `includes/functions.php`: `sanitize`, `e`, `logError`, `validateTask`,

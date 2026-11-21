@@ -109,11 +109,6 @@ require_once BASE_PATH . '/includes/header.php';
         </form>
 
         <p>Already have an account? <a href="<?php echo BASE_URL; ?>/pages/login.php">Login</a></p>
-        <p>
-            <a href="<?php echo BASE_URL; ?>/pages/theme.php?theme=<?php echo e($next_theme); ?>">
-                Use <?php echo $theme === 'dark' ? 'light' : 'dark'; ?> mode
-            </a>
-        </p>
     </div>
 </section>
 

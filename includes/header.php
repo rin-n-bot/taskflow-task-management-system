@@ -6,12 +6,6 @@ $page_title = $page_title ?? 'Task Flow';
 $is_auth_page = in_array($page_title, ['Log in', 'Register'], true);
 $has_action_dialogs = in_array($page_title, ['Tasks', 'Projects', 'Users'], true);
 
-// Theme preference comes from a cookie; only light or dark is accepted.
-$theme = 'light';
-if (isset($_COOKIE['theme']) && in_array($_COOKIE['theme'], ['light', 'dark'], true)) {
-    $theme = $_COOKIE['theme'];
-}
-$next_theme = $theme === 'dark' ? 'light' : 'dark';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +18,7 @@ $next_theme = $theme === 'dark' ? 'light' : 'dark';
         <script src="<?php echo BASE_URL; ?>/assets/js/action-dialog.js" defer></script>
     <?php endif; ?>
 </head>
-<body class="theme-<?php echo e($theme); ?>"<?php echo $is_auth_page ? ' id="auth-page"' : ''; ?>>
+<body class="theme-light"<?php echo $is_auth_page ? ' id="auth-page"' : ''; ?>>
     <div class="layout">
         <?php if (!$is_auth_page): ?>
             <aside class="sidebar">
@@ -44,9 +38,6 @@ $next_theme = $theme === 'dark' ? 'light' : 'dark';
                         <a href="<?php echo BASE_URL; ?>/pages/login.php">Log in</a>
                         <a href="<?php echo BASE_URL; ?>/pages/register.php">Register</a>
                     <?php endif; ?>
-                    <a href="<?php echo BASE_URL; ?>/pages/theme.php?theme=<?php echo e($next_theme); ?>">
-                        <?php echo $theme === 'dark' ? 'Light mode' : 'Dark mode'; ?>
-                    </a>
                 </nav>
             </aside>
         <?php endif; ?>

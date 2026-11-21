@@ -128,11 +128,6 @@ require_once BASE_PATH . '/includes/header.php';
         </form>
 
         <p>New to Task Flow? <a href="<?php echo BASE_URL; ?>/pages/register.php">Create an account</a></p>
-        <p>
-            <a href="<?php echo BASE_URL; ?>/pages/theme.php?theme=<?php echo e($next_theme); ?>">
-                Use <?php echo $theme === 'dark' ? 'light' : 'dark'; ?> mode
-            </a>
-        </p>
     </div>
 </section>
 

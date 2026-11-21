@@ -65,7 +65,7 @@ taskflow/
 ├── config/database.php          (PDO connection, central)
 ├── includes/{header.php, layout_end.php, functions.php, auth.php}
 ├── pages/
-│   ├── login.php, register.php, logout.php, dashboard.php, profile.php, theme.php
+│   ├── login.php, register.php, logout.php, dashboard.php, profile.php
 │   ├── projects/{index,create,edit,delete}.php
 │   ├── tasks/{index,create,edit,delete,view,comment_delete}.php
 │   └── admin/users.php
@@ -88,9 +88,8 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - All DB operations in `try/catch`: log technical errors to `logs/error.log`, show only friendly messages.
 - Invalid or missing ID (e.g. in `edit.php`, `view.php`) → friendly message + redirect.
 - Login and registration pages use a split two-panel layout without the shared
-  sidebar. Keep the theme toggle and link to the other account action beside
-  the form.
-- Other pages use the shared left sidebar for navigation and the theme toggle.
+  sidebar. Keep a link to the other account action beside the form.
+- Other pages use the shared left sidebar for navigation.
   On small screens, the sidebar moves above the main content.
 - Task, project, and admin user list actions open in a modal from a three-dot
   button. Give the modal clear spacing, a close button, Escape-key support, and
@@ -108,7 +107,7 @@ README contents: project name, team members, XAMPP setup + SQL import steps, def
 - Admin: task counts by status, overdue count, total projects, total members.
 - Member: own task counts by status, own overdue count.
 - Overdue = `due_date < CURDATE() AND status != 'done'`.
-- Theme toggle (light/dark) via cookie.
+- The app uses the light theme only; there is no theme toggle.
 
 ### 4.3 Projects (admin CRUD)
 - List with search-by-title (GET).
@@ -154,7 +153,7 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 | # | Phase | Build | Professor's week |
 |---|---|---|---|
 | 1 | Proposal | Title, problem, users/roles, features, table list | 2 |
-| 2 | Scaffold | Folders, `config/database.php` (PDO), `includes/functions.php` and `includes/auth.php` (function names per `AGENTS.md`), shared header/layout includes, `style.css`, `theme.php`, `index.php`, placeholders, `.htaccess`, empty log | 3 |
+| 2 | Scaffold | Folders, `config/database.php` (PDO), `includes/functions.php` and `includes/auth.php` (function names per `AGENTS.md`), shared header/layout includes, `style.css`, `index.php`, placeholders, `.htaccess`, empty log | 3 |
 | 3 | Database | `taskflow.sql` with schema + only the admin seed (real `password_hash`); create demo records through the website | 6–9 |
 | 4 | Auth | register, login, logout, remember-username cookie | 10 (guide: 15) |
 | 5 | Projects | full CRUD + search + confirm delete | 10–11 |
@@ -163,7 +162,7 @@ Aligned to the professor's weekly milestones (`final_project_guide.md` §5). Aut
 | 8 | Comments | add + delete with role/ownership | 12 |
 | 9 | Users | list, change role, delete + SQLSTATE 23000 catch | 15–16 |
 | 10 | Profile | name + avatar upload | 17 |
-| 11 | Dashboard | role-aware counts, overdue, theme cookie | 14 |
+| 11 | Dashboard | role-aware counts and overdue summary | 14 |
 | 12 | Audit + docs | walk every file against `AGENTS.md`; README + 20-row test log; export manually entered demo records; manuscript | 13, 17 |
 | 13 | Presentation | Demo: DB → register/login → CRUD → filters → roles → validation → errors → code walkthrough | 18 |
 
